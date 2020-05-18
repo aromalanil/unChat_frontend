@@ -1,25 +1,58 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import { userLoggedState } from './Recoil/atom.js';
+import { useRecoilValue } from 'recoil';
+
+import ProtectedRoute from "./Components/ProtectedRoute";
+import ChangePassword from "./Components/Pages/ChangePassword";
+import Dashboard from "./Components/Pages/Dashboard";
+import Register from "./Components/Pages/Register";
+import Logout from "./Components/Pages/Logout";
+import Login from "./Components/Pages/Login";
+import Footer from "./Components/Footer";
+import Nav from "./Components/Nav";
+
+import "./scss/app.scss";
 
 function App() {
+
+  const isUserLoggedIn = useRecoilValue(userLoggedState);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+    <Router>
+      <Nav isUserLoggedIn={isUserLoggedIn} />
+      <div className="app-content">
+        <Switch>
+
+          <Route path="/login">
+            <Login />
+          </Route>
+
+          <Route path="/register" component={Register} />
+
+          <Route path="/changepassword" component={ChangePassword} />
+
+          <ProtectedRoute
+            path="/dashboard"
+            protectCondition={isUserLoggedIn}
+            component={Dashboard}
+          />
+
+          <ProtectedRoute
+            path="/logout"
+            protectCondition={isUserLoggedIn}
+            component={Logout}
+          />
+
+        </Switch>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
