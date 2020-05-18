@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Input from '../Input';
+import {useRecoilState} from 'recoil';
+import { userLoggedState } from '../../Recoil/atom.js';
 
 const Login = ({ history }) => {
 
-    const [userName, setUsername] = useState('');
+    const [isUserLoggedIn,setUserLoggedIn] = useRecoilState(userLoggedState);
+
+    const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [userNameInfo, setUserNameInfo] = useState(null);
     const [passwordInfo, setPasswordInfo] = useState(null);
@@ -14,7 +18,7 @@ const Login = ({ history }) => {
         if (name === "password")
             setPassword(value);
         else if (name === "username")
-            setUsername(value);
+            setUserName(value);
     }
 
     useEffect(() => {
@@ -71,7 +75,8 @@ const Login = ({ history }) => {
                 .then(res => {
                     if (res.status === 200 && res.data.accessToken) {
                         localStorage.setItem("accessToken", res.data.accessToken);
-                        history.push('/dashboard')
+                        setUserLoggedIn(true);
+                        history.push('/dashboard');
                     }
                 })
                 .catch(err => {
@@ -100,12 +105,12 @@ const Login = ({ history }) => {
                     <p>Login to continue</p>
                 </div>
                 <form className="box-form">
-                    <Input info={userNameInfo} value={userName} name="username" title="Username" type="text" icon="fa-user" inputChange={inputChange} />
+                    <Input info={userNameInfo} value={userName} name="username" title="Username" type="text" icon="fa-at" inputChange={inputChange} />
                     <Input info={passwordInfo} value={password} name="password" title="Password" type="password" icon="fa-lock" inputChange={inputChange} />
                     <button className="btn primary-btn" onClick={handleLoginClick} type="submit">Login</button>
                 </form>
                 <div className="prompts">
-                    <p >Don't have account ? <Link to="/register">Create an account.</Link></p>
+                    <p >Don't have an account ? <Link to="/register">Create an account.</Link></p>
                     <p id="change-password">Forgot Password ? <Link to="/changepassword">Change Password.</Link></p>
                 </div>
             </div>
@@ -119,7 +124,7 @@ const validateUserName = (username) => {
 }
 
 const validatePassword = (password) => {
-    return password.length > 6
+    return password.length >= 6
 }
 
 export default Login

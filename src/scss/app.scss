@@ -22,6 +22,10 @@ html {
   font-size: 10px;
 }
 
+::-webkit-scrollbar {
+  width: 0px;
+}
+
 a,
 p,
 h4,
@@ -42,16 +46,20 @@ h1 {
 }
 
 body {
-  padding-top: $nav-height;
+  margin-top: $nav-height;
   font-family: $primary-font;
   width: 100%;
   background-color: $primary-background;
   color: $font-color-primary;
 }
 
-.app-content {
+.root {
   width: 100%;
   height: 100%;
+}
+
+.app-content {
+  width: 100%;
   min-height: calc(100vh - 70px);
   display: flex;
   align-items: center;
@@ -67,6 +75,8 @@ body {
   padding: 0.5rem 1.5rem;
   font-weight: 700;
   background-color: transparent;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   transition: 0.3s;
   transition-property: filter;
   &:focus {
@@ -91,6 +101,7 @@ body {
 
 .navbar {
   position: fixed;
+  z-index: 999;
   top: 0;
   left: 0;
   width: 100%;
@@ -109,16 +120,16 @@ body {
 }
 
 .msg-box {
+  margin: 5rem 0;
   background-color: $secondary-background;
-  height: 100%;
   border-radius: 1rem;
-  padding: 5rem 5rem;
+  padding: 5rem 7rem;
   .box-content {
     .box-head {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-bottom: 5rem;
+      padding-bottom: 4rem;
       p {
         padding-top: 0.5rem;
         font-size: 1.4rem;
@@ -149,6 +160,11 @@ body {
       font-size: 1.4rem;
       color: $secondary-color;
       text-decoration: none;
+      transition: .3s;
+      transition-property: filter;
+      &:hover {
+        filter: brightness(1.5);
+      }
     }
     #change-password {
       margin-top: 0.5rem;
@@ -161,7 +177,7 @@ body {
     background-color: $font-color-tertiary;
     border: none;
     padding: 1.2rem 1rem;
-    line-height: 1.8rem;
+    line-height: 0rem;
     padding-left: 5rem;
     color: $font-color-primary;
     border-radius: 5rem;
@@ -183,10 +199,10 @@ body {
     margin-top: 0.9rem;
     margin-bottom: 2.5rem;
     i {
-      opacity: 0.9;
+      opacity: 0.8;
       padding: 1.2rem 0 1.2rem 2rem;
       font-size: 1.8rem;
-      line-height: 1.8rem;
+      line-height: 1.9rem;
       top: 0;
       bottom: 0;
       position: absolute;
@@ -194,15 +210,15 @@ body {
     }
     p {
       position: absolute;
-      right:1.5rem;
-      bottom:-2rem;
+      right: 1.5rem;
+      bottom: -2rem;
       font-size: 1.3rem;
     }
-    .warning-msg{
-        color:$warning-color;
+    .warning-msg {
+      color: $warning-color;
     }
-    .error-msg{
-        color:$tertiary-color;
+    .error-msg {
+      color: $tertiary-color;
     }
   }
 }
@@ -217,10 +233,47 @@ body {
 }
 
 .input-error {
-    input {
-      box-shadow: 0px 0px 4px $tertiary-color;
-    }
-    i {
-      color: $tertiary-color;
+  input {
+    box-shadow: 0px 0px 4px $tertiary-color;
+  }
+  i {
+    color: $tertiary-color;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .navbar {
+    padding: 0 5%;
+    .button-grp {
+      button {
+        transform: scale(0.8);
+        margin: 0;
+      }
     }
   }
+  .app-content {
+    background-color: $secondary-background;
+  }
+  .msg-box {
+    margin: 0 0;
+    padding: 5rem 0;
+    border-radius: 0px;
+    height: 100%;
+    width: 100%;
+    .box-form {
+      input {
+        width: 60vw;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 490px) {
+  .msg-box {
+    .box-form {
+      input {
+        width: 80vw;
+      }
+    }
+  }
+}

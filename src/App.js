@@ -11,7 +11,6 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import ChangePassword from "./Components/Pages/ChangePassword";
 import Dashboard from "./Components/Pages/Dashboard";
 import Register from "./Components/Pages/Register";
-import Logout from "./Components/Pages/Logout";
 import Login from "./Components/Pages/Login";
 import Footer from "./Components/Footer";
 import Nav from "./Components/Nav";
@@ -39,12 +38,6 @@ function App() {
             path="/dashboard"
             protectCondition={isUserLoggedIn}
             component={Dashboard}
-          />
-
-          <ProtectedRoute
-            path="/logout"
-            protectCondition={isUserLoggedIn}
-            component={Logout}
           />
 
         </Switch>
