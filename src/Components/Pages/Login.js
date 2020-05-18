@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Input from '../Input';
 
-const Login = () => {
+const Login = ({ history }) => {
 
     const [userName, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [userNameInfo, setUserNameInfo] = useState(null);
+    const [passwordInfo, setPasswordInfo] = useState(null);
 
     const inputChange = (name, value) => {
         if (name === "password")
@@ -15,17 +17,79 @@ const Login = () => {
             setUsername(value);
     }
 
+    useEffect(() => {
+        setUserNameInfo(null);
+        if (userName && !validateUserName(userName)) {
+            setUserNameInfo({
+                type: "warning",
+                msg: "Only use letters and numbers"
+            })
+        }
+    }, [userName]);
+
+    useEffect(() => {
+        setPasswordInfo(null);
+        if (password && !validatePassword(password)) {
+            setPasswordInfo({
+                type: "warning",
+                msg: "Minimum 6 characters required"
+            })
+        }
+    }, [password]);
+
     const handleLoginClick = (event) => {
         event.preventDefault();
-        axios.post({
-            url: 'http://localhost:5000/user/login'
-        })
-            .then(data => {
-                console.log(data);
+
+        if((password && !validatePassword(password)) || (userName && !validateUserName(userName))){ 
+                return
+        }
+            
+        setUserNameInfo(null);
+        setPasswordInfo(null);
+
+        if (userName === '') {
+            setUserNameInfo({
+                type: "error",
+                msg: "Username cannot be empty"
             })
-            .catch(error => {
-                console.log(error);
+        }
+        if (password === '') {
+            setPasswordInfo({
+                type: "error",
+                msg: "Password cannot be empty"
             })
+        }
+        if (userName && password) {
+            axios({
+                method: 'post',
+                url: '/user/login',
+                data: {
+                    username: userName,
+                    password: password
+                }
+            })
+                .then(res => {
+                    if (res.status === 200 && res.data.accessToken) {
+                        localStorage.setItem("accessToken", res.data.accessToken);
+                        history.push('/dashboard')
+                    }
+                })
+                .catch(err => {
+                    switch (err.response.status) {
+                        case 404: setUserNameInfo({
+                            type: "error",
+                            msg: "Username not found"
+                        });
+                            break;
+                        case 401: setPasswordInfo({
+                            type: "error",
+                            msg: "Password is incorrect"
+                        })
+                            break;
+                        default: break;
+                    }
+                })
+        }
     }
 
     return (
@@ -36,8 +100,8 @@ const Login = () => {
                     <p>Login to continue</p>
                 </div>
                 <form className="box-form">
-                    <Input info={{type:"warning",msg:"Hello"}} value={userName} name="username" title="Username" type="text" icon="fa-user" inputChange={inputChange} />
-                    <Input info={{type:"error",msg:"Hello"}} value={password} name="password" title="Password" type="password" icon="fa-lock" inputChange={inputChange} />
+                    <Input info={userNameInfo} value={userName} name="username" title="Username" type="text" icon="fa-user" inputChange={inputChange} />
+                    <Input info={passwordInfo} value={password} name="password" title="Password" type="password" icon="fa-lock" inputChange={inputChange} />
                     <button className="btn primary-btn" onClick={handleLoginClick} type="submit">Login</button>
                 </form>
                 <div className="prompts">
@@ -47,6 +111,15 @@ const Login = () => {
             </div>
         </div>
     )
+}
+
+const validateUserName = (username) => {
+    let regex = /^[0-9a-zA-Z]+$/;
+    return username.match(regex);
+}
+
+const validatePassword = (password) => {
+    return password.length > 6
 }
 
 export default Login

@@ -29,9 +29,7 @@ function App() {
       <div className="app-content">
         <Switch>
 
-          <Route path="/login">
-            <Login />
-          </Route>
+          <Route path="/login" component={Login}/>
 
           <Route path="/register" component={Register} />
 
