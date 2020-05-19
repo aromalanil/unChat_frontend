@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import Input from '../Input';
 import {useRecoilState} from 'recoil';
 import { userLoggedState } from '../../Recoil/atom.js';
+import FormCard from '../FormCard';
+
+import {validatePassword,validateUserName} from "../../Helpers/validation";
 
 const Login = ({ history }) => {
 
@@ -13,13 +16,22 @@ const Login = ({ history }) => {
     const [password, setPassword] = useState('');
     const [userNameInfo, setUserNameInfo] = useState(null);
     const [passwordInfo, setPasswordInfo] = useState(null);
-    const [isButtonDisabled, setButtonDisabled] = useState(true);
 
     const inputChange = (name, value) => {
         if (name === "password")
             setPassword(value);
         else if (name === "username")
             setUserName(value);
+    }
+
+    const isButtonDisabled=()=>{
+        if (passwordInfo != null || userNameInfo != null)
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     useEffect(() => {
@@ -42,19 +54,10 @@ const Login = ({ history }) => {
         }
     }, [password]);
 
-    useEffect(() => {
-        if (passwordInfo != null || userNameInfo != null)
-        {
-            setButtonDisabled(true);
-        }
-        else{
-            setButtonDisabled(false)
-        }
-    }, [passwordInfo, userNameInfo])
 
     const handleLoginClick = (event) => {
         event.preventDefault();
-        
+
         if (userName === '') {
             setUserNameInfo({
                 type: "error",
@@ -102,32 +105,18 @@ const Login = ({ history }) => {
     }
 
     return (
-        <div className="msg-box">
-            <div className="box-content">
-                <div className="box-head">
-                    <h2>Welcome Back</h2>
-                    <p>Login to continue</p>
-                </div>
-                <form className="box-form">
+        <FormCard title="Welcome Back" subtitle="Login to continue">
+            <form autoComplete="off" className="box-form">
                     <Input info={userNameInfo} value={userName} name="username" title="Username" type="text" icon="fa-at" inputChange={inputChange} />
                     <Input info={passwordInfo} value={password} name="password" title="Password" type="password" icon="fa-lock" inputChange={inputChange} />
-                    <button disabled={isButtonDisabled} className="btn primary-btn" onClick={handleLoginClick} type="submit">Login</button>
+                    <button disabled={isButtonDisabled()} className="btn primary-btn" onClick={handleLoginClick} type="submit">Login</button>
                 </form>
                 <div className="prompts">
                     <p >Don't have an account ? <Link to="/register">Create an account.</Link></p>
                 </div>
-            </div>
-        </div>
+        </FormCard>
     )
 }
 
-const validateUserName = (username) => {
-    let regex = /^[0-9a-zA-Z]+$/;
-    return username.match(regex);
-}
 
-const validatePassword = (password) => {
-    return password.length >= 6
-}
-
-export default Login
+export default Login;

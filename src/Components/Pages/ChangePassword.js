@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import Input from '../Input';
+import FormCard from '../FormCard';
+import { validatePassword, validateUserName } from "../../Helpers/validation";
 
 const ChangePassword = ({ history }) => {
 
@@ -10,7 +12,6 @@ const ChangePassword = ({ history }) => {
     const [userNameInfo, setUserNameInfo] = useState(null);
     const [passwordInfo, setPasswordInfo] = useState(null);
     const [newPasswordInfo, setNewPasswordInfo] = useState(null);
-    const [isButtonDisabled, setButtonDisabled] = useState(true);
 
     const inputChange = (name, value) => {
         if (name === "password")
@@ -19,6 +20,15 @@ const ChangePassword = ({ history }) => {
             setUserName(value);
         else if (name === "newpassword")
             setNewPassword(value);
+    }
+
+    const isButtonDisabled = () => {
+        if (passwordInfo != null || userNameInfo != null || newPasswordInfo != null) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     useEffect(() => {
@@ -62,17 +72,6 @@ const ChangePassword = ({ history }) => {
             setNewPasswordInfo(null);
         }
     }, [password, newPassword]);
-
-
-    useEffect(() => {
-        if (passwordInfo != null || userNameInfo != null || newPasswordInfo != null)
-        {
-            setButtonDisabled(true);
-        }
-        else{
-            setButtonDisabled(false)
-        }
-    }, [passwordInfo, userNameInfo, newPasswordInfo])
 
     const handleChangeClick = (event) => {
         event.preventDefault();
@@ -129,31 +128,16 @@ const ChangePassword = ({ history }) => {
     }
 
     return (
-        <div className="msg-box">
-            <div className="box-content">
-                <div className="box-head">
-                    <h2>Change Password</h2>
-                    <p>Create a new password</p>
-                </div>
-                <form className="box-form">
-                    <Input info={userNameInfo} value={userName} name="username" title="Username" type="text" icon="fa-at" inputChange={inputChange} />
-                    <Input info={passwordInfo} value={password} name="password" title="Password" type="password" icon="fa-lock" inputChange={inputChange} />
-                    <Input info={newPasswordInfo} value={newPassword} name="newpassword" title="New Password" type="password" icon="fa-user-lock" inputChange={inputChange} />
-                    <button disabled={isButtonDisabled} className="btn primary-btn" onClick={handleChangeClick} type="submit">Change</button>
-                </form>
-            </div>
-        </div>
+        <FormCard title="Change Password" subtitle="Create a new password">
+            <form autoComplete="off" className="box-form">
+                <Input info={userNameInfo} value={userName} name="username" title="Username" type="text" icon="fa-at" inputChange={inputChange} />
+                <Input info={passwordInfo} value={password} name="password" title="Password" type="password" icon="fa-lock" inputChange={inputChange} />
+                <Input info={newPasswordInfo} value={newPassword} name="newpassword" title="New Password" type="password" icon="fa-user-lock" inputChange={inputChange} />
+                <button disabled={isButtonDisabled()} className="btn primary-btn" onClick={handleChangeClick} type="submit">Change</button>
+            </form>
+        </FormCard>
     )
 }
 
-
-const validateUserName = (username) => {
-    let regex = /^[0-9a-zA-Z]+$/;
-    return username.match(regex);
-}
-
-const validatePassword = (password) => {
-    return password.length >= 6
-}
 
 export default ChangePassword
