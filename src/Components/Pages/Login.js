@@ -13,6 +13,7 @@ const Login = ({ history }) => {
     const [password, setPassword] = useState('');
     const [userNameInfo, setUserNameInfo] = useState(null);
     const [passwordInfo, setPasswordInfo] = useState(null);
+    const [isButtonDisabled, setButtonDisabled] = useState(true);
 
     const inputChange = (name, value) => {
         if (name === "password")
@@ -41,16 +42,19 @@ const Login = ({ history }) => {
         }
     }, [password]);
 
+    useEffect(() => {
+        if (passwordInfo != null || userNameInfo != null)
+        {
+            setButtonDisabled(true);
+        }
+        else{
+            setButtonDisabled(false)
+        }
+    }, [passwordInfo, userNameInfo])
+
     const handleLoginClick = (event) => {
         event.preventDefault();
-
-        if((password && !validatePassword(password)) || (userName && !validateUserName(userName))){ 
-                return
-        }
-            
-        setUserNameInfo(null);
-        setPasswordInfo(null);
-
+        
         if (userName === '') {
             setUserNameInfo({
                 type: "error",
@@ -107,11 +111,10 @@ const Login = ({ history }) => {
                 <form className="box-form">
                     <Input info={userNameInfo} value={userName} name="username" title="Username" type="text" icon="fa-at" inputChange={inputChange} />
                     <Input info={passwordInfo} value={password} name="password" title="Password" type="password" icon="fa-lock" inputChange={inputChange} />
-                    <button className="btn primary-btn" onClick={handleLoginClick} type="submit">Login</button>
+                    <button disabled={isButtonDisabled} className="btn primary-btn" onClick={handleLoginClick} type="submit">Login</button>
                 </form>
                 <div className="prompts">
                     <p >Don't have an account ? <Link to="/register">Create an account.</Link></p>
-                    <p id="change-password">Forgot Password ? <Link to="/changepassword">Change Password.</Link></p>
                 </div>
             </div>
         </div>
