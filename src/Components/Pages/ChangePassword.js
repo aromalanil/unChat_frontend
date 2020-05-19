@@ -130,9 +130,9 @@ const ChangePassword = ({ history }) => {
     return (
         <FormCard title="Change Password" subtitle="Create a new password">
             <form autoComplete="off" className="box-form">
-                <Input info={userNameInfo} value={userName} name="username" title="Username" type="text" icon="fa-at" inputChange={inputChange} />
-                <Input info={passwordInfo} value={password} name="password" title="Password" type="password" icon="fa-lock" inputChange={inputChange} />
-                <Input info={newPasswordInfo} value={newPassword} name="newpassword" title="New Password" type="password" icon="fa-user-lock" inputChange={inputChange} />
+                <Input info={userNameInfo} value={userName} name="username" title="Username" type="text" icon="fa-at first-icon" inputChange={inputChange} />
+                <Input info={passwordInfo} value={password} name="password" title="Password" type="password" icon="fa-lock second-icon" inputChange={inputChange} />
+                <Input info={newPasswordInfo} value={newPassword} name="newpassword" title="New Password" type="password" icon="fa-user-lock third-icon" inputChange={inputChange} />
                 <button disabled={isButtonDisabled()} className="btn primary-btn" onClick={handleChangeClick} type="submit">Change</button>
             </form>
         </FormCard>

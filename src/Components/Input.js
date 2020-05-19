@@ -11,7 +11,7 @@ const Input = ({ icon, title, type, name, inputChange, value, info }) => {
         <div className={`input-wrapper ${info && (info.type==='error' ? "input-error" : "input-warning")}`}>
             <label htmlFor={name}>{title}</label>
             <div>
-                <i className={`fa ${icon} ${info && (info.type==='error' ? "fa-exclamation-circle" : "fa-exclamation-triangle")}`}></i>
+                <i className={`fa ${(info ? (info.type==='error' ? "fa-exclamation-circle" : "fa-exclamation-triangle") : icon)}`}></i>
                 <input type={type}
                     name={name}
                     placeholder={title}

@@ -9,6 +9,7 @@ import { useRecoilValue } from 'recoil';
 
 import ProtectedRoute from "./Components/ProtectedRoute";
 import ChangePassword from "./Components/Pages/ChangePassword";
+import SendMessage from "./Components/Pages/SendMessage.js";
 import Dashboard from "./Components/Pages/Dashboard";
 import Register from "./Components/Pages/Register";
 import Login from "./Components/Pages/Login";
@@ -24,7 +25,7 @@ function App() {
   return (
 
     <Router>
-      <Nav isUserLoggedIn={isUserLoggedIn} />
+      <Nav/>
       <div className="app-content">
         <Switch>
 
@@ -33,6 +34,8 @@ function App() {
           <Route path="/register" component={Register} />
 
           <Route path="/changepassword" component={ChangePassword} />
+
+          <Route path="/send:username" component={SendMessage} />
 
           <ProtectedRoute
             path="/dashboard"

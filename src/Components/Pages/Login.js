@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Input from '../Input';
-import {useRecoilState} from 'recoil';
+import { useRecoilState } from 'recoil';
 import { userLoggedState } from '../../Recoil/atom.js';
 import FormCard from '../FormCard';
 
-import {validatePassword,validateUserName} from "../../Helpers/validation";
+import { validatePassword, validateUserName } from "../../Helpers/validation";
 
 const Login = ({ history }) => {
 
-    const [isUserLoggedIn,setUserLoggedIn] = useRecoilState(userLoggedState);
+    const [isUserLoggedIn, setUserLoggedIn] = useRecoilState(userLoggedState);
 
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
@@ -24,12 +24,11 @@ const Login = ({ history }) => {
             setUserName(value);
     }
 
-    const isButtonDisabled=()=>{
-        if (passwordInfo != null || userNameInfo != null)
-        {
+    const isButtonDisabled = () => {
+        if (passwordInfo != null || userNameInfo != null) {
             return true;
         }
-        else{
+        else {
             return false;
         }
     }
@@ -87,18 +86,20 @@ const Login = ({ history }) => {
                     }
                 })
                 .catch(err => {
-                    switch (err.response.status) {
-                        case 404: setUserNameInfo({
-                            type: "error",
-                            msg: "Username not found"
-                        });
-                            break;
-                        case 401: setPasswordInfo({
-                            type: "error",
-                            msg: "Password is incorrect"
-                        })
-                            break;
-                        default: break;
+                    if (err.response) {
+                        switch (err.response.status) {
+                            case 404: setUserNameInfo({
+                                type: "error",
+                                msg: "Username not found"
+                            });
+                                break;
+                            case 401: setPasswordInfo({
+                                type: "error",
+                                msg: "Password is incorrect"
+                            })
+                                break;
+                            default: break;
+                        }
                     }
                 })
         }
@@ -107,13 +108,13 @@ const Login = ({ history }) => {
     return (
         <FormCard title="Welcome Back" subtitle="Login to continue">
             <form autoComplete="off" className="box-form">
-                    <Input info={userNameInfo} value={userName} name="username" title="Username" type="text" icon="fa-at" inputChange={inputChange} />
-                    <Input info={passwordInfo} value={password} name="password" title="Password" type="password" icon="fa-lock" inputChange={inputChange} />
-                    <button disabled={isButtonDisabled()} className="btn primary-btn" onClick={handleLoginClick} type="submit">Login</button>
-                </form>
-                <div className="prompts">
-                    <p >Don't have an account ? <Link to="/register">Create an account.</Link></p>
-                </div>
+                <Input info={userNameInfo} value={userName} name="username" title="Username" type="text" icon="fa-at first-icon" inputChange={inputChange} />
+                <Input info={passwordInfo} value={password} name="password" title="Password" type="password" icon="fa-lock second-icon" inputChange={inputChange} />
+                <button disabled={isButtonDisabled()} className="btn primary-btn" onClick={handleLoginClick} type="submit">Login</button>
+            </form>
+            <div className="prompts">
+                <p >Don't have an account ? <Link to="/register">Create an account.</Link></p>
+            </div>
         </FormCard>
     )
 }

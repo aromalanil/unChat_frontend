@@ -115,9 +115,9 @@ const Register = ({ history }) => {
     return (
         <FormCard title="Register" subtitle="and let's get you to the Awesome!">
             <form autoComplete="off" className="box-form">
-                <Input info={nameInfo} value={name} name="name" title="Name" type="text" icon="fa-user" inputChange={inputChange} />
-                <Input info={userNameInfo} value={userName} name="username" title="Username" type="text" icon="fa-at" inputChange={inputChange} />
-                <Input info={passwordInfo} value={password} name="password" title="Password" type="password" icon="fa-lock" inputChange={inputChange} />
+                <Input info={nameInfo} value={name} name="name" title="Name" type="text" icon="fa-user first-icon" inputChange={inputChange} />
+                <Input info={userNameInfo} value={userName} name="username" title="Username" type="text" icon="fa-at second-icon" inputChange={inputChange} />
+                <Input info={passwordInfo} value={password} name="password" title="Password" type="password" icon="fa-lock third-icon" inputChange={inputChange} />
                 <button disabled={isButtonDisabled()} className="btn primary-btn" onClick={handleRegisterClick} type="submit">Register</button>
             </form>
             <div className="prompts">
@@ -126,7 +126,5 @@ const Register = ({ history }) => {
         </FormCard>
     )
 }
-
-
 
 export default Register
