@@ -73,7 +73,6 @@ const Register = ({ history }) => {
     }, [name]);
 
     const handleRegisterClick = (event) => {
-
         event.preventDefault();
 
         if (userName === '') {
