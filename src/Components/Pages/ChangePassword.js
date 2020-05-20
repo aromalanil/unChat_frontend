@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import Input from '../Input';
 import FormCard from '../FormCard';
+import AlertBox from '../AlertBox'
 import { validatePassword, validateUserName } from "../../Helpers/validation";
 
 const ChangePassword = ({ history }) => {
@@ -12,6 +13,8 @@ const ChangePassword = ({ history }) => {
     const [userNameInfo, setUserNameInfo] = useState(null);
     const [passwordInfo, setPasswordInfo] = useState(null);
     const [newPasswordInfo, setNewPasswordInfo] = useState(null);
+
+    const [alert, setAlert] = useState(null);
 
     const inputChange = (name, value) => {
         if (name === "password")
@@ -29,6 +32,10 @@ const ChangePassword = ({ history }) => {
         else {
             return false;
         }
+    }
+
+    const closeAlert = () => {
+        setAlert(null);
     }
 
     useEffect(() => {
@@ -106,36 +113,65 @@ const ChangePassword = ({ history }) => {
             })
                 .then(res => {
                     if (res.status === 200) {
-                        history.push('/login');
+                        setAlert({
+                            type: "success",
+                            title: "Success",
+                            content: "Your password has been changed",
+                            buttonName: "Close",
+                            clickEvent: closeAlert
+                        })
                     }
                 })
                 .catch(err => {
-                    switch (err.response.status) {
-                        case 404: setUserNameInfo({
+                    if (err.response) {
+                        switch (err.response.status) {
+                            case 404: setUserNameInfo({
+                                type: "error",
+                                msg: "Username not found"
+                            });
+                                break;
+                            case 401: setPasswordInfo({
+                                type: "error",
+                                msg: "Password is incorrect"
+                            })
+                                break;
+                            default: setAlert({
+                                type: "error",
+                                title: "Error",
+                                content: "Something went wrong",
+                                buttonName: "Close",
+                                clickEvent: closeAlert
+                            });
+                                break;
+                        }
+                    }
+                    else {
+                        setAlert({
                             type: "error",
-                            msg: "Username not found"
-                        });
-                            break;
-                        case 401: setPasswordInfo({
-                            type: "error",
-                            msg: "Password is incorrect"
+                            title: "Error",
+                            content: "Something went wrong",
+                            buttonName: "Close",
+                            clickEvent: closeAlert
                         })
-                            break;
-                        default: break;
                     }
                 })
         }
     }
 
     return (
-        <FormCard title="Change Password" subtitle="Create a new password">
-            <form autoComplete="off" className="box-form">
-                <Input info={userNameInfo} value={userName} name="username" title="Username" type="text" icon="fa-at first-icon" inputChange={inputChange} />
-                <Input info={passwordInfo} value={password} name="password" title="Password" type="password" icon="fa-lock second-icon" inputChange={inputChange} />
-                <Input info={newPasswordInfo} value={newPassword} name="newpassword" title="New Password" type="password" icon="fa-user-lock third-icon" inputChange={inputChange} />
-                <button disabled={isButtonDisabled()} className="btn primary-btn" onClick={handleChangeClick} type="submit">Change</button>
-            </form>
-        </FormCard>
+        <>
+            <FormCard title="Change Password" subtitle="Create a new password">
+                <form autoComplete="off" className="box-form">
+                    <Input info={userNameInfo} value={userName} name="username" title="Username" type="text" icon="fa-at first-icon" inputChange={inputChange} />
+                    <Input info={passwordInfo} value={password} name="password" title="Password" type="password" icon="fa-lock second-icon" inputChange={inputChange} />
+                    <Input info={newPasswordInfo} value={newPassword} name="newpassword" title="New Password" type="password" icon="fa-user-lock third-icon" inputChange={inputChange} />
+                    <button disabled={isButtonDisabled()} className="btn primary-btn" onClick={handleChangeClick} type="submit">Change</button>
+                </form>
+            </FormCard>
+            {alert &&
+                <AlertBox {...alert} />
+            }
+        </>
     )
 }
 

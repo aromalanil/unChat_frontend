@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import history from "../../Helpers/history";
-import {sortByDate} from "../../Helpers/utils"
+import {sortByDate} from "../../Helpers/utils";
 
 import { userLoggedState } from "../../Recoil/atom";
 import { useRecoilState } from "recoil";
@@ -29,7 +28,6 @@ const Dashboard = () => {
       })
       .catch((err) => {
         if (err.response) {
-          history.push("/login");
           localStorage.removeItem("accessToken");
           setUserLoggedIn(false);
         }

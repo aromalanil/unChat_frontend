@@ -23,13 +23,11 @@ const UserInfo = ({ name, username }) => {
         })
             .then(res => {
                 if (res.status === 201) {
-                    history.push('/login');
                     localStorage.removeItem('accessToken');
                     setUserLoggedIn(false);
                 }
             })
             .catch(err => {
-                history.push('/login');
                 localStorage.removeItem('accessToken');
                 setUserLoggedIn(false);
             })

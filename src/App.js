@@ -13,7 +13,6 @@ import SendMessage from "./Components/Pages/SendMessage.js";
 import Dashboard from "./Components/Pages/Dashboard";
 import Register from "./Components/Pages/Register";
 import Login from "./Components/Pages/Login";
-import Footer from "./Components/Footer";
 import Nav from "./Components/Nav";
 
 import "./scss/app.scss";
@@ -25,26 +24,31 @@ function App() {
   return (
 
     <Router>
-      <Nav/>
+      <Nav />
       <div className="app-content">
         <Switch>
 
-          <Route path="/login" component={Login}/>
-
-          <Route path="/register" component={Register} />
+          <Route path="/login" component={Login} />
 
           <Route path="/changepassword" component={ChangePassword} />
 
-          <Route path="/send:username" component={SendMessage} />
+          <Route path="/send/:username" component={SendMessage} />
+
+          <ProtectedRoute
+            path="/register"
+            redirectTo="/dashboard"
+            protectCondition={!isUserLoggedIn}
+            component={Register} />
+
 
           <ProtectedRoute
             path="/dashboard"
+            redirectTo="/login"
             protectCondition={isUserLoggedIn}
             component={Dashboard}
           />
 
         </Switch>
-        <Footer />
       </div>
     </Router>
   );

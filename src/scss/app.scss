@@ -353,6 +353,7 @@ body {
   border-radius: 1rem;
   align-items: center;
   .user-info {
+    min-width: 13%;
     max-width: 20%;
     margin: 0 5rem;
     display: flex;
@@ -377,10 +378,10 @@ body {
         display: flex;
         align-items: center;
         flex-direction: column;
-        h2{
+        h2 {
           margin-top: 1rem;
           line-height: 4rem;
-          margin-bottom: .5rem;
+          margin-bottom: 0.5rem;
         }
         p {
           color: $font-color-secondary;
@@ -388,50 +389,50 @@ body {
         }
       }
     }
-    .user-links{
-      display:flex;
+    .user-links {
+      display: flex;
       flex-direction: column;
       align-items: center;
       width: 100%;
-      .social-share{
+      .social-share {
         margin: 2rem 0 3rem;
-        color:$font-color-secondary;
+        color: $font-color-secondary;
         width: 100%;
         text-align: center;
-        .share-btns{
+        .share-btns {
           margin-top: 1rem;
           display: flex;
           align-items: center;
           justify-content: space-evenly;
-          a{
+          a {
             font-size: 3rem;
-            transition: .3s;
-            transition-property: filter,transform;
-            &:hover{
+            transition: 0.3s;
+            transition-property: filter, transform;
+            &:hover {
               filter: brightness(1.3);
             }
-            &:active{
+            &:active {
               transform: translateY(2px);
             }
           }
-          .fa-whatsapp{
-            color:rgba(79, 206, 94, 0.747);
+          .fa-whatsapp {
+            color: rgba(79, 206, 94, 0.747);
           }
-          .fa-instagram{
-            color:#E4405F;
+          .fa-instagram {
+            color: #e4405f;
           }
-          .fa-facebook{
-            color:rgb(83, 117, 192);
+          .fa-facebook {
+            color: rgb(83, 117, 192);
           }
-          .fa-twitter{
-            color:#55ACEE;
+          .fa-twitter {
+            color: #55acee;
           }
-          .fa-telegram{
-            color:#0088CC;
+          .fa-telegram {
+            color: #0088cc;
           }
         }
       }
-      .btn{
+      .btn {
         margin-top: 1rem;
       }
     }
@@ -450,7 +451,6 @@ body {
     overflow-y: scroll;
     margin-top: 2rem;
     .messages {
-      
       margin-top: 2rem;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(36rem, 1fr));
@@ -465,7 +465,7 @@ body {
       line-height: 20px;
       display: flex;
       flex-direction: column;
-      .line-clamp{
+      .line-clamp {
         overflow-y: scroll;
         margin-top: 1rem;
       }
@@ -482,26 +482,144 @@ body {
   }
 }
 
-@media screen and (max-width: 1100px) {
-  .dashboard {
-    .user-info {
-      margin: 0 3rem;
+.send-msg {
+  box-shadow: 0 0 20px 20px #01010148;
+  border-radius: 1rem;
+  background-color: $secondary-background;
+  width: 60vw;
+  height: 75vh;
+  padding: 3rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  .head {
+    text-align: center;
+    p {
+      margin-top: 0.5rem;
+      color: $font-color-secondary;
+    }
+    .user-name {
+      white-space: nowrap;
+    }
+  }
+  .btn {
+    align-self: start;
+  }
+  .message-input {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 2rem 5rem;
+    width: 90%;
+    height: 100%;
+    textarea {
+      padding: 3rem 4rem;
+      margin: 1rem 0 3rem;
+      font-size: 1.8rem;
+      height: 100%;
+      line-height: 2.4rem;
+      background-color: $font-color-tertiary;
+      opacity: 1;
+      border: none;
+      color: $font-color-primary;
+      border-radius: 0.5rem;
+      &:focus {
+        outline: none;
+      }
+      &::placeholder {
+        font-family: $primary-font;
+        font-size: 1.7rem;
+        opacity: 0.8;
+        color: $font-color-secondary;
+      }
+    }
+    .error-textarea {
+      box-shadow: 0px 0px 5px $tertiary-color;
+      &::placeholder {
+        color: $tertiary-color;
+        font-weight: 600;
+      }
+    }
+    label {
+      font-size: 1.4rem;
+      opacity: 0.8;
+      font-weight: 600;
     }
   }
 }
 
+.alert-box {
+  z-index: 998;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 50px 30px #01010198;
+  border-radius: 2rem;
+  background-color: $secondary-background;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 3rem;
+  i {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+  }
+  .success {
+    color: $primary-color;
+  }
+  .warning {
+    color: #ffdd57;
+  }
+  .error {
+    color: $tertiary-color;
+  }
+  h3 {
+    margin-bottom: 0.5rem;
+    font-size: 3.2rem;
+  }
+  p {
+    color: $font-color-secondary;
+    margin-bottom: 3rem;
+    font-size: 1.6rem;
+  }
+}
+
+.overlay{
+  position: fixed;
+  background-color: #cadcfa1e;
+  top:0;
+  left:0;
+  height: 100vh;
+  width: 100vw;
+}
+
+@media screen and (max-width: 1100px) {
+  .dashboard {
+    .user-info {
+      min-width: 20%;
+      margin: 0 3rem;
+    }
+  }
+  .send-msg {
+    width: 70vw;
+  }
+}
+
 @media screen and (max-width: 870px) {
-  .avatar-dropdown{
+  .avatar-dropdown {
     width: 100%;
   }
   .dashboard {
     flex-direction: column;
     width: 100%;
-    height: 100%;
+    height: calc(100vh - 70px);
     border-radius: 0;
     .user-info {
       margin: 3rem 0;
       max-width: 100%;
+      min-width: 35%;
       .user {
         transform: scale(0.8);
       }
@@ -522,6 +640,22 @@ body {
       }
       .message {
         margin: 2rem 0rem;
+      }
+    }
+  }
+  .send-msg {
+    width: 100%;
+    height: calc(100vh - 70px);
+    border-radius: 0;
+    padding: 10% 5%;
+    .head {
+      p {
+        font-size: 1.6rem;
+      }
+    }
+    .message-input {
+      textarea {
+        font-size: 1.65rem;
       }
     }
   }
@@ -558,10 +692,24 @@ body {
   }
   .dashboard {
     .user-info {
-     margin: 3rem 0;
+      margin: 3rem 0;
     }
-    .message-section{
+    .message-section {
       padding: 2rem 1.1rem;
+    }
+  }
+  .send-msg {
+    padding: 3rem 0;
+    .head {
+      h2 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+    }
+    .message-input {
+      textarea {
+        padding: 2rem 3rem;
+      }
     }
   }
 }
@@ -575,11 +723,10 @@ body {
     }
   }
 }
-@media screen and (max-width:370px) {
-  .avatar-wrapper{
-    .avatar-dropdown{
+@media screen and (max-width: 370px) {
+  .avatar-wrapper {
+    .avatar-dropdown {
       width: 80vw;
     }
   }
-  
 }
