@@ -5,7 +5,7 @@ import FormCard from '../FormCard';
 import AlertBox from '../AlertBox'
 import { validatePassword, validateUserName } from "../../Helpers/validation";
 
-const ChangePassword = ({ history }) => {
+const ChangePassword = () => {
 
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');

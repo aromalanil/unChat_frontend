@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios'
+import axios from 'axios';
 import SocialShare from '../Components/SocialShare';
-import AlertBox from '../Components/AlertBox'
-
+import AlertBox from '../Components/AlertBox';
 
 import { userLoggedState } from "../Recoil/atom";
 import { useRecoilState } from "recoil";
