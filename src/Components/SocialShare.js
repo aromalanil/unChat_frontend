@@ -4,7 +4,7 @@ const SocialShare = ({ username }) => {
 
     console.log(username);
     
-  const shareUrl = `${window.location.hostname}/send/${username}`;
+  const shareUrl = `${window.location.protocol}//${window.location.hostname}/send/${username}`;
 
   const text = `Hey 👋, 
   Found this cool website where you can message me anonymously. I will never know who messaged me 😂.
