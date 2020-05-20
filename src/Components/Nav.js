@@ -13,7 +13,7 @@ const Nav = () => {
   return (
     <header className="navbar">
       <div className="logo">
-       <Link to="/"><h3><i className="fa fa-envelope"></i>&nbsp;&nbsp;B.T.M</h3></Link> 
+       <Link to="/"><h3>un<span>Chat</span>&nbsp;<i className="fa fa-envelope-open"></i></h3></Link> 
       </div>
 
       {isUserLoggedIn

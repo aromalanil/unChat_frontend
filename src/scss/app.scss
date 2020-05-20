@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Spartan:wght@700&display=swap");
 
 $primary-color: #09c372;
 $secondary-color: #3e73ce;
@@ -10,7 +11,10 @@ $font-color-secondary: #b2becd;
 $font-color-tertiary: #454e56;
 $warning-color: rgb(255, 230, 0);
 $primary-font: "Open Sans", sans-serif;
+$logo-font: "Spartan", sans-serif;
 $nav-height: 70px;
+$logo-primary-color: #5088e9;
+$logo-secondary-color: #ff5f5b;
 
 * {
   margin: 0;
@@ -131,6 +135,14 @@ body {
       color: inherit;
       text-decoration: none;
     }
+    h3 {
+      font-family: $logo-font;
+      font-size: 2.8rem;
+      color: $logo-primary-color;
+      span {
+        color: $logo-secondary-color;
+      }
+    }
   }
   .button-grp {
     button {
@@ -185,6 +197,84 @@ body {
       transition-property: filter;
       &:hover {
         filter: brightness(1.5);
+      }
+    }
+  }
+}
+
+.home {
+  height: calc(100vh - 70px);
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10rem 2rem 5rem;
+  .intro {
+    text-align: center;
+    h1 {
+      .logo {
+        color: $logo-primary-color;
+        white-space: nowrap;
+        span {
+          color: $logo-secondary-color;
+        }
+      }
+      margin-bottom: 1.5rem;
+    }
+    p {
+      color: $font-color-secondary;
+    }
+    button {
+      margin: 3rem;
+      margin-bottom: 5rem;
+    }
+  }
+
+  .separator {
+    width: 80vw;
+    height: 3px;
+    background-color: $font-color-secondary;
+    opacity: 0.3;
+    border-radius: 1px;
+  }
+  .msg-user {
+    max-height: 50vw;
+    width: 100%;
+    padding: 0 10vw;
+    margin-top: 5rem;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    p {
+      color: $font-color-secondary;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    input {
+      margin: 0 2rem;
+      min-width: 30rem;
+      background-color: $font-color-tertiary;
+      border: none;
+      padding: 1.2rem 2.4rem;
+      color: $font-color-primary;
+      border-radius: 5rem;
+      &:focus {
+        outline: none;
+      }
+      &::placeholder {
+        font-size: 1.8rem;
+        line-height: 1.8rem;
+        opacity: 0.8;
+        color: $font-color-secondary;
+      }
+    }
+    .input-error {
+      box-shadow: 0px 0px 8px 1px $tertiary-color;
+      &::placeholder {
+        font-weight: 600;
+        color: $tertiary-color;
       }
     }
   }
@@ -563,7 +653,7 @@ body {
   align-items: center;
   flex-direction: column;
   padding: 3rem;
-  text-align:center;
+  text-align: center;
   i {
     font-size: 5rem;
     margin-bottom: 1rem;
@@ -588,16 +678,16 @@ body {
   }
 }
 
-.overlay{
+.overlay {
   position: fixed;
   background-color: #000000a1;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   height: 100vh;
   width: 100vw;
 }
 
-.not-found{
+.not-found {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -606,15 +696,15 @@ body {
   width: 100%;
   height: calc(100vh - 70px);
   overflow-y: scroll;
-  padding:12vh 15vw;
-  img{
+  padding: 12vh 15vw;
+  img {
     width: 30rem;
     margin-bottom: 2rem;
   }
-  h1{
+  h1 {
     font-size: 4rem;
   }
-  p{
+  p {
     color: $font-color-secondary;
     margin-bottom: 2rem;
   }
@@ -633,6 +723,26 @@ body {
 }
 
 @media screen and (max-width: 870px) {
+  .home {
+    .msg-user {
+      flex-wrap: nowrap;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0 20%;
+      form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+      input {
+        margin: 3rem 0;
+        width: 100%;
+      }
+      button {
+        align-self: flex-end;
+      }
+    }
+  }
   .avatar-dropdown {
     width: 100%;
   }
@@ -671,7 +781,6 @@ body {
         margin: 2rem 0rem;
       }
     }
-    
   }
   .send-msg {
     width: 100%;
@@ -692,6 +801,17 @@ body {
 }
 
 @media screen and (max-width: 600px) {
+  .home {
+    .msg-user {
+      flex-wrap: nowrap;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0 10%;
+      input{
+        min-width: 0;
+      }
+    }
+  }
   .navbar {
     padding: 0 5%;
     h3 {
@@ -729,7 +849,7 @@ body {
     }
   }
   .send-msg {
-    padding: 3rem 0;
+    padding: 3rem 3%;
     .head {
       h2 {
         font-size: 3rem;
@@ -743,21 +863,33 @@ body {
     }
   }
   .alert-box {
-     width: 80vw;
+    width: 80vw;
   }
-  .not-found{
-    img{
+  .not-found {
+    img {
       width: 50vw;
     }
-    h1{
+    h1 {
     }
-    p{
-      
+    p {
     }
   }
 }
 
 @media screen and (max-width: 490px) {
+  .home {
+    .intro {
+      h1 {
+        font-size: 8vw;
+      }
+      p {
+        font-size: 4vw;
+      }
+    }
+    button {
+      transform: scale(0.95);
+    }
+  }
   .msg-box {
     .box-form {
       input {
@@ -765,17 +897,17 @@ body {
       }
     }
   }
-  .not-found{
-    h1{
+  .not-found {
+    h1 {
       font-size: 10vw;
     }
-    p{
+    p {
       font-size: 4.5vw;
     }
   }
 }
 @media screen and (max-width: 370px) {
-  html{
+  html {
     font-size: 2.7vw;
   }
   .avatar-wrapper {
