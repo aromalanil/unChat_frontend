@@ -54,7 +54,7 @@ function App() {
             component={Dashboard}
           />
 
-          <Route path="/" component={Home}/>
+          <Route exact path="/" component={Home}/>
 
           <Redirect from="*" to="/404"/>
 
