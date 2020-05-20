@@ -1,0 +1,23 @@
+import React from 'react'
+import image from '../../img/404.svg'
+
+const NotFound = ({history}) => {
+
+    const goToHome=()=>{
+        history.push('/')
+    }
+    
+    return (
+        <div className="not-found">
+            <img src={image} alt="404"/>
+            <div className="content">
+                <h1>Not Found</h1>
+                <p>The page you are looking for is Not Found</p>
+            </div>
+            <button onClick={goToHome} className="btn primary-btn">Home</button>
+        </div>
+    )
+}
+
+
+export default NotFound;

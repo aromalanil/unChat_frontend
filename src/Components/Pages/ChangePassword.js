@@ -120,6 +120,9 @@ const ChangePassword = ({ history }) => {
                             buttonName: "Close",
                             clickEvent: closeAlert
                         })
+                        setUserName('');
+                        setNewPassword('');
+                        setPassword('');
                     }
                 })
                 .catch(err => {
@@ -141,7 +144,7 @@ const ChangePassword = ({ history }) => {
                                 content: "Something went wrong",
                                 buttonName: "Close",
                                 clickEvent: closeAlert
-                            });
+                            })
                                 break;
                         }
                     }

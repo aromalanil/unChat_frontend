@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {sortByDate} from "../../Helpers/utils";
+import { sortByDate } from "../../Helpers/utils";
 
 import { userLoggedState } from "../../Recoil/atom";
 import { useRecoilState } from "recoil";
 
 import UserInfo from "../UserInfo";
 import MessageBox from "../MessageBox";
+import AlertBox from '../AlertBox';
 
 const Dashboard = () => {
   const [userData, setUserData] = useState({});
   const [isUserLoggedIn, setUserLoggedIn] = useRecoilState(userLoggedState);
+
+  const [alert, setAlert] = useState(null);
+
+  const closeAlert = () => {
+    setAlert(null);
+  }
 
   const getUserData = (accessToken) => {
     //Getting Messages,Username and Name
@@ -28,8 +35,28 @@ const Dashboard = () => {
       })
       .catch((err) => {
         if (err.response) {
-          localStorage.removeItem("accessToken");
-          setUserLoggedIn(false);
+          if (err.response.status === 500) {
+            setAlert({
+              type: "error",
+              title: "Network Error",
+              content: "Make sure you are connected to a network.",
+              buttonName: "Close",
+              clickEvent: closeAlert
+            })
+          }
+          else {
+            localStorage.removeItem("accessToken");
+            setUserLoggedIn(false);
+          }
+        }
+        else {
+          setAlert({
+            type: "error",
+            title: "Error",
+            content: "Something went wrong",
+            buttonName: "Close",
+            clickEvent: closeAlert
+          });
         }
       });
   };
@@ -48,16 +75,21 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard">
-      <UserInfo name={userData.name} username={userData.username} />
-      <div className="separator"></div>
-      <div className="message-section">
-        <h2>Your Messages</h2>
-        <div className="messages">
-          {userData.messages ? showMessages() : <div className="no-messages">No messages</div>}
+    <>
+      <div className="dashboard">
+        <UserInfo name={userData.name} username={userData.username} />
+        <div className="separator"></div>
+        <div className="message-section">
+          <h2>Your Messages</h2>
+          <div className="messages">
+            {userData.messages ? showMessages() : <p className="no-messages">Inbox is empty</p>}
+          </div>
         </div>
       </div>
-    </div>
+      {alert &&
+        <AlertBox {...alert} />
+      }
+    </>
   );
 };
 

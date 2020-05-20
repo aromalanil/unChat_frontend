@@ -3,8 +3,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Input from '../Input';
 import FormCard from '../FormCard';
+import AlertBox from '../AlertBox';
 
-import {validatePassword,validateUserName,validateName} from "../../Helpers/validation";
+import { validatePassword, validateUserName, validateName } from "../../Helpers/validation";
 
 const Register = ({ history }) => {
 
@@ -14,6 +15,8 @@ const Register = ({ history }) => {
     const [nameInfo, setNameInfo] = useState(null);
     const [userNameInfo, setUserNameInfo] = useState(null);
     const [passwordInfo, setPasswordInfo] = useState(null);
+
+    const [alert, setAlert] = useState(null);
 
     const inputChange = (name, value) => {
         if (name === "password")
@@ -31,6 +34,11 @@ const Register = ({ history }) => {
         else {
             return false;
         }
+    }
+
+    const closeAlert = () => {
+        setAlert(null);
+        history.push('/login');
     }
 
     useEffect(() => {
@@ -98,32 +106,61 @@ const Register = ({ history }) => {
             })
                 .then(res => {
                     if (res.status === 201 && res.data.message === "User created") {
-                        history.push('/login')
+                        setAlert({
+                            type: "success",
+                            title: "Success!",
+                            content: "You have successfully registered. Login to continue",
+                            buttonName: "Login",
+                            clickEvent: closeAlert
+                        });
                     }
                 })
                 .catch(err => {
-                    if(err.response.status===409){
+                    if (err.response.status === 409) {
                         setUserNameInfo({
                             type: "error",
                             msg: "Username taken"
-                        }) 
+                        })
+                    }
+                    else if (err.response.status === 500) {
+                        setAlert({
+                            type: "error",
+                            title: "Network Error",
+                            content: "Make sure you are connected to a network.",
+                            buttonName: "Close",
+                            clickEvent: closeAlert
+                        })
+                    }
+                    else {
+                        setAlert({
+                            type: "error",
+                            title: "Error",
+                            content: "Something went wrong.",
+                            buttonName: "Close",
+                            clickEvent: closeAlert
+                        })
                     }
                 })
         }
     }
 
     return (
-        <FormCard title="Register" subtitle="and let's get you to the Awesome!">
-            <form autoComplete="off" className="box-form">
-                <Input info={nameInfo} value={name} name="name" title="Name" type="text" icon="fa-user first-icon" inputChange={inputChange} />
-                <Input info={userNameInfo} value={userName} name="username" title="Username" type="text" icon="fa-at second-icon" inputChange={inputChange} />
-                <Input info={passwordInfo} value={password} name="password" title="Password" type="password" icon="fa-lock third-icon" inputChange={inputChange} />
-                <button disabled={isButtonDisabled()} className="btn primary-btn" onClick={handleRegisterClick} type="submit">Register</button>
-            </form>
-            <div className="prompts">
-                <p>Already have an account ? <Link to="/login">Log in.</Link></p>
-            </div>
-        </FormCard>
+        <>
+            <FormCard title="Register" subtitle="and let's get you to the Awesome!">
+                <form autoComplete="off" className="box-form">
+                    <Input info={nameInfo} value={name} name="name" title="Name" type="text" icon="fa-user first-icon" inputChange={inputChange} />
+                    <Input info={userNameInfo} value={userName} name="username" title="Username" type="text" icon="fa-at second-icon" inputChange={inputChange} />
+                    <Input info={passwordInfo} value={password} name="password" title="Password" type="password" icon="fa-lock third-icon" inputChange={inputChange} />
+                    <button disabled={isButtonDisabled()} className="btn primary-btn" onClick={handleRegisterClick} type="submit">Register</button>
+                </form>
+                <div className="prompts">
+                    <p>Already have an account ? <Link to="/login">Log in.</Link></p>
+                </div>
+            </FormCard>
+            {alert &&
+                <AlertBox {...alert} />
+            }
+        </>
     )
 }
 

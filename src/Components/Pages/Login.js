@@ -5,6 +5,8 @@ import Input from '../Input';
 import { useRecoilState } from 'recoil';
 import { userLoggedState } from '../../Recoil/atom.js';
 import FormCard from '../FormCard';
+import AlertBox from '../AlertBox';
+
 
 import { validatePassword, validateUserName } from "../../Helpers/validation";
 
@@ -16,6 +18,11 @@ const Login = ({ history }) => {
     const [password, setPassword] = useState('');
     const [userNameInfo, setUserNameInfo] = useState(null);
     const [passwordInfo, setPasswordInfo] = useState(null);
+    const [alert, setAlert] = useState(null);
+
+    const closeAlert = () => {
+        setAlert(null);
+    }
 
     const inputChange = (name, value) => {
         if (name === "password")
@@ -98,24 +105,46 @@ const Login = ({ history }) => {
                                 msg: "Password is incorrect"
                             })
                                 break;
+                            case 500: setAlert({
+                                type: "error",
+                                title: "Network Error",
+                                content: "Make sure you are connected to a network.",
+                                buttonName: "Close",
+                                clickEvent: closeAlert
+                            });
+                                break;
                             default: break;
                         }
+                    }
+                    else {
+                        setAlert({
+                            type: "error",
+                            title: "Error",
+                            content: "Something went wrong",
+                            buttonName: "Close",
+                            clickEvent: closeAlert
+                        });
                     }
                 })
         }
     }
 
     return (
-        <FormCard title="Welcome Back" subtitle="Login to continue">
-            <form autoComplete="off" className="box-form">
-                <Input info={userNameInfo} value={userName} name="username" title="Username" type="text" icon="fa-at first-icon" inputChange={inputChange} />
-                <Input info={passwordInfo} value={password} name="password" title="Password" type="password" icon="fa-lock second-icon" inputChange={inputChange} />
-                <button disabled={isButtonDisabled()} className="btn primary-btn" onClick={handleLoginClick} type="submit">Login</button>
-            </form>
-            <div className="prompts">
-                <p >Don't have an account ? <Link to="/register">Create an account.</Link></p>
-            </div>
-        </FormCard>
+        <>
+            <FormCard title="Welcome Back" subtitle="Login to continue">
+                <form autoComplete="off" className="box-form">
+                    <Input info={userNameInfo} value={userName} name="username" title="Username" type="text" icon="fa-at first-icon" inputChange={inputChange} />
+                    <Input info={passwordInfo} value={password} name="password" title="Password" type="password" icon="fa-lock second-icon" inputChange={inputChange} />
+                    <button disabled={isButtonDisabled()} className="btn primary-btn" onClick={handleLoginClick} type="submit">Login</button>
+                </form>
+                <div className="prompts">
+                    <p >Don't have an account ? <Link to="/register">Create an account.</Link></p>
+                </div>
+            </FormCard>
+            {alert &&
+                <AlertBox {...alert} />
+            }
+        </>
     )
 }
 
