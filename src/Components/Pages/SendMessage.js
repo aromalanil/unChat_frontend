@@ -3,8 +3,8 @@ import axios from "axios";
 import AlertBox from '../AlertBox';
 import { baseUrl } from '../../Helpers/constants';
 
-const SendMessage = (props) => {
-  const { username } = props.match.params;
+const SendMessage = ({history,match}) => {
+  const { username } = match.params;
 
   const [isButtonDisabled, setButtonDisabled] = useState(false);
   const [name, setName] = useState(null);
@@ -13,7 +13,7 @@ const SendMessage = (props) => {
   const [alert, setAlert] = useState(null);
 
   const closeAlert = () => {
-    props.history.push('/');
+    history.push('/');
     setAlert(null);
   }
 
@@ -39,7 +39,7 @@ const SendMessage = (props) => {
           })
         }
         else if (err.response.status === 404) {
-          props.history.push('/404');
+          history.push('/404');
         }
         else {
           setAlert({
