@@ -18,11 +18,16 @@ const SendMessage = (props) => {
     setAlert(null);
   }
 
+
   useEffect(() => {
+
+    document.title = "Send Anonymous | unChat"
+
     axios(`${baseUrl}/user/${username}`, { timeout: 5000 })
       .then((res) => {
         if (res.status === 200) {
           setName(res.data.name);
+          document.title = `Send Anonymous Message to ${res.data.name} | unChat`
         }
       })
       .catch((err) => {

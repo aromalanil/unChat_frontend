@@ -41,6 +41,10 @@ const ChangePassword = () => {
     }
 
     useEffect(() => {
+        document.title = "Change Password | unChat"
+    }, []);
+
+    useEffect(() => {
         setUserNameInfo(null);
         if (userName && !validateUserName(userName)) {
             setUserNameInfo({

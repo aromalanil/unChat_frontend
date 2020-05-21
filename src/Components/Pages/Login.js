@@ -41,6 +41,10 @@ const Login = ({ history }) => {
     }
 
     useEffect(() => {
+        document.title = "unChat | Send Anonymous Messages"
+    }, []);
+
+    useEffect(() => {
         setUserNameInfo(null);
         if (userName && !validateUserName(userName)) {
             setUserNameInfo({

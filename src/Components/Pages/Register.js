@@ -43,6 +43,10 @@ const Register = ({ history }) => {
     }
 
     useEffect(() => {
+        document.title = "Register | unChat";
+    }, []);
+
+    useEffect(() => {
         setUserNameInfo(null);
         if (userName && !validateUserName(userName)) {
             setUserNameInfo({

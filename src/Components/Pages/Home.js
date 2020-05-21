@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { userLoggedState } from "../../Recoil/atom";
 import {  useRecoilValue } from "recoil";
 
@@ -7,6 +7,10 @@ const Home = ({ history }) => {
     const isUserLoggedIn = useRecoilValue(userLoggedState);
     const [isButtonDisabled, setButtonDisabled] = useState(false);
     const [username, setUsername] = useState('');
+
+    useEffect(() => {
+        document.title = "User Login | unChat"
+    }, []);
 
     const handleButtonClick = () => {
         history.push(isUserLoggedIn ? '/dashboard' : '/register')
