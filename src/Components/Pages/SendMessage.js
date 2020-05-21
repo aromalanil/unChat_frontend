@@ -13,11 +13,9 @@ const SendMessage = (props) => {
   const [alert, setAlert] = useState(null);
 
   const closeAlert = () => {
-    props.history.pop();
     props.history.push('/');
     setAlert(null);
   }
-
 
   useEffect(() => {
 
