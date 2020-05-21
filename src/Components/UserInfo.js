@@ -2,24 +2,25 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import SocialShare from '../Components/SocialShare';
 import AlertBox from '../Components/AlertBox';
+import { baseUrl } from '../Helpers/constants';
 
 import { userLoggedState } from "../Recoil/atom";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 
 const UserInfo = ({ name, username }) => {
 
-    const [isUserLoggedIn, setUserLoggedIn] = useRecoilState(userLoggedState);
+    const setUserLoggedIn = useSetRecoilState(userLoggedState);
     const [alert, setAlert] = useState(null);
 
     const closeAlert = () => {
         setAlert(null);
     }
-
     const handleLogoutClick = () => {
 
         const accessToken = localStorage.getItem("accessToken");
         axios({
-            url: "/user/logout",
+            url: `${baseUrl}/user/logout`,
+            timeout:5000,
             method: "DELETE",
             headers: {
                 authorization: `Bearer ${accessToken}`
@@ -67,8 +68,8 @@ const UserInfo = ({ name, username }) => {
                         <i className="fa fa-user"></i>
                     </div>
                     <div className="user-details">
-                        <h2>{name ? name : 'Loading..'}</h2>
-                        <p>{name ? `@${username}` : 'username'}</p>
+                        <h2>{name ? name : 'Loading...'}</h2>
+                        <p>{name ? `@${username}` : '@username'}</p>
                     </div>
                 </div>
                 <div className="user-links">
@@ -83,4 +84,4 @@ const UserInfo = ({ name, username }) => {
     )
 }
 
-export default UserInfo
+export default UserInfo;

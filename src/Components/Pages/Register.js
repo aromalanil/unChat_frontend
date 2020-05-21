@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Input from '../Input';
 import FormCard from '../FormCard';
 import AlertBox from '../AlertBox';
+import { baseUrl } from '../../Helpers/constants';
 
 import { validatePassword, validateUserName, validateName } from "../../Helpers/validation";
 
@@ -96,7 +97,8 @@ const Register = ({ history }) => {
         if (name && userName && password) {
             axios({
                 method: 'post',
-                url: 'user/register',
+                url: `${baseUrl}/user/register `,
+                timeout:5000,
                 data: {
                     name: name.trim(),
                     username: userName,
@@ -115,20 +117,22 @@ const Register = ({ history }) => {
                     }
                 })
                 .catch(err => {
-                    if (err.response.status === 409) {
-                        setUserNameInfo({
-                            type: "error",
-                            msg: "Username taken"
-                        })
-                    }
-                    else if (err.response.status === 500) {
-                        setAlert({
-                            type: "error",
-                            title: "Network Error",
-                            content: "Make sure you are connected to a network.",
-                            buttonName: "Close",
-                            clickEvent: closeAlert
-                        })
+                    if (err.response) {
+                        if (err.response.status === 409) {
+                            setUserNameInfo({
+                                type: "error",
+                                msg: "Username taken"
+                            })
+                        }
+                        else if (err.response.status === 500) {
+                            setAlert({
+                                type: "error",
+                                title: "Network Error",
+                                content: "Make sure you are connected to a network.",
+                                buttonName: "Close",
+                                clickEvent: closeAlert
+                            })
+                        }
                     }
                     else {
                         setAlert({

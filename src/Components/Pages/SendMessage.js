@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AlertBox from '../AlertBox';
+import { baseUrl } from '../../Helpers/constants';
 
 const SendMessage = (props) => {
   const { username } = props.match.params;
@@ -18,7 +19,7 @@ const SendMessage = (props) => {
   }
 
   useEffect(() => {
-    axios(`/user/${username}`)
+    axios(`${baseUrl}/user/${username}`, { timeout: 5000 })
       .then((res) => {
         if (res.status === 200) {
           setName(res.data.name);
@@ -63,7 +64,8 @@ const SendMessage = (props) => {
 
     axios({
       method: "POST",
-      url: `/message/${username}`,
+      timeout: 5000,
+      url: `${baseUrl}/message/${username}`,
       data: {
         message
       }

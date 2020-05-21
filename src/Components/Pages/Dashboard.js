@@ -3,15 +3,16 @@ import axios from "axios";
 import { sortByDate } from "../../Helpers/utils";
 
 import { userLoggedState } from "../../Recoil/atom";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 
 import UserInfo from "../UserInfo";
 import MessageBox from "../MessageBox";
 import AlertBox from '../AlertBox';
+import {baseUrl} from '../../Helpers/constants';
 
 const Dashboard = () => {
-  const [userData, setUserData] = useState({});
-  const [isUserLoggedIn, setUserLoggedIn] = useRecoilState(userLoggedState);
+  const [userData, setUserData] = useState(null);
+  const setUserLoggedIn = useSetRecoilState(userLoggedState)
 
   const [alert, setAlert] = useState(null);
 
@@ -22,8 +23,9 @@ const Dashboard = () => {
   const getUserData = (accessToken) => {
     //Getting Messages,Username and Name
     axios({
-      url: "/user/dashboard",
+      url: `${baseUrl}/user/dashboard`,
       method: "GET",
+      timeout:5000,
       headers: {
         authorization: `Bearer ${accessToken}`,
       },
@@ -77,12 +79,12 @@ const Dashboard = () => {
   return (
     <>
       <div className="dashboard">
-        <UserInfo name={userData.name} username={userData.username} />
+        <UserInfo name={userData && userData.name} username={userData && userData.username} />
         <div className="separator"></div>
         <div className="message-section">
           <h2>Your Messages</h2>
           <div className="messages">
-            {userData.messages ? showMessages() : <p className="no-messages">Inbox is empty</p>}
+            {userData ? (userData.messages ? showMessages() : <p className="no-messages">Inbox is empty</p>) : <p className="no-messages">Loading...</p>}
           </div>
         </div>
       </div>

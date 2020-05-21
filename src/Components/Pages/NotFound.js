@@ -1,7 +1,11 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import image from '../../img/404.webp'
 
 const NotFound = ({history}) => {
+
+    useEffect(() => {
+        document.title='Not Found (404) | unChat';
+    }, [])
 
     const goToHome=()=>{
         history.push('/')

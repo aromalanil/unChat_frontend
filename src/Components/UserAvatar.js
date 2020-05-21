@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
-import AlertBox from '../Components/AlertBox'
+import AlertBox from '../Components/AlertBox';
+import {baseUrl} from '../Helpers/constants';
 
 import { userLoggedState } from "../Recoil/atom";
-import { useRecoilState } from "recoil";
+import {  useSetRecoilState } from "recoil";
 
 const UserAvatar = () => {
     const [isDropdownVisible, setDropDownVisible] = useState(false);
     const [userData, setUserData] = useState({});
-    const [isUserLoggedIn, setUserLoggedIn] = useRecoilState(userLoggedState);
+    const setUserLoggedIn = useSetRecoilState(userLoggedState);
     const [alert, setAlert] = useState(null);
 
     useEffect(() => {
@@ -31,7 +32,8 @@ const UserAvatar = () => {
 
         const accessToken = localStorage.getItem("accessToken");
         axios({
-            url: "/user/logout",
+            url: `${baseUrl}/user/logout`,
+            timeout:5000,
             method: "DELETE",
             headers: {
                 authorization: `Bearer ${accessToken}`

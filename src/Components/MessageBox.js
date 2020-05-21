@@ -1,11 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import moment from "moment";
 
 
 const MessageBox = ({ message }) => {
-  useEffect(() => {
-  
-  }, []);
 
   return (
     <div className="message">

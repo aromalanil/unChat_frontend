@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom';
 import UserAvatar from "./UserAvatar";
 
 import { userLoggedState } from "../Recoil/atom";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 
 
 const Nav = () => {
 
-  const [isUserLoggedIn, setUserLoggedIn] = useRecoilState(userLoggedState);
+  const isUserLoggedIn = useRecoilValue(userLoggedState);
 
   return (
     <header className="navbar">
       <div className="logo">
-       <Link to="/"><h3>un<span>Chat</span>&nbsp;<i className="fa fa-envelope-open"></i></h3></Link> 
+        <Link to="/"><h3>un<span>Chat</span>&nbsp;<i className="fa fa-envelope-open"></i></h3></Link>
       </div>
 
       {isUserLoggedIn

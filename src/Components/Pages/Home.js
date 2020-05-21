@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { userLoggedState } from "../../Recoil/atom";
-import { useRecoilState } from "recoil";
+import {  useRecoilValue } from "recoil";
 
 const Home = ({ history }) => {
 
-    const [isUserLoggedIn, setUserLoggedIn] = useRecoilState(userLoggedState);
+    const isUserLoggedIn = useRecoilValue(userLoggedState);
     const [isButtonDisabled, setButtonDisabled] = useState(false);
     const [username, setUsername] = useState('');
 

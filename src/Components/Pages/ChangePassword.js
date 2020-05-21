@@ -5,6 +5,8 @@ import FormCard from '../FormCard';
 import AlertBox from '../AlertBox'
 import { validatePassword, validateUserName } from "../../Helpers/validation";
 
+import {baseUrl} from '../../Helpers/constants';
+
 const ChangePassword = () => {
 
     const [userName, setUserName] = useState('');
@@ -104,7 +106,8 @@ const ChangePassword = () => {
         if (userName && password && newPassword) {
             axios({
                 method: 'post',
-                url: '/user/password',
+                url: `${baseUrl}/user/password`,
+                timeout:5000,
                 data: {
                     username: userName,
                     password: password,

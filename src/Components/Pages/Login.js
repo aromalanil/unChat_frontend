@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Input from '../Input';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { userLoggedState } from '../../Recoil/atom.js';
 import FormCard from '../FormCard';
 import AlertBox from '../AlertBox';
-
+import {baseUrl} from '../../Helpers/constants';
 
 import { validatePassword, validateUserName } from "../../Helpers/validation";
 
 const Login = ({ history }) => {
 
-    const [isUserLoggedIn, setUserLoggedIn] = useRecoilState(userLoggedState);
+    const setUserLoggedIn = useSetRecoilState(userLoggedState)
 
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
@@ -79,7 +79,8 @@ const Login = ({ history }) => {
         if (userName && password) {
             axios({
                 method: 'post',
-                url: '/user/login',
+                url: `${baseUrl}/user/login`,
+                timeout:5000,
                 data: {
                     username: userName,
                     password: password
