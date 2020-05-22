@@ -2,13 +2,15 @@
 <div align="center">
   <img src="https://img.shields.io/github/repo-size/aromalanil/unchat_frontend"/>
   <a href="https://app.netlify.com/sites/unchat/deploys" target="_blank">
-  <img src="https://api.netlify.com/api/v1/badges/c7eae3d7-7600-4cb7-9d76-574465b75de9/deploy-status"/>
-<img src="https://img.shields.io/github/issues/aromalanil/unChat_frontend"/>
-</a>
+    <img src="https://api.netlify.com/api/v1/badges/c7eae3d7-7600-4cb7-9d76-574465b75de9/deploy-status"/>
+  </a>
+  <img src="https://img.shields.io/github/issues/aromalanil/unChat_frontend"/>
+
+<br/>
+
   <img src="https://raw.githubusercontent.com/aromalanil/unChat_frontend/master/public/img/preview.png"/>
 </div>
 <br/>
-
 
 ## 💻 How it works
 
@@ -20,12 +22,11 @@ You can have fun with it or use professionally to get unbiased feedback
 
 ## 🛠 Stack Used
 
-* React
-* Node.js
-* Express
-* MongoDB
-* SCSS
-
+- React
+- Node.js
+- Express
+- MongoDB
+- SCSS
 
 </br>
 
