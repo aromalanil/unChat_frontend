@@ -9,7 +9,7 @@ const Home = ({ history }) => {
     const [username, setUsername] = useState('');
 
     useEffect(() => {
-        document.title = "User Login | unChat"
+        document.title = "unChat | Send Anonymous Messages"
     }, []);
 
     const handleButtonClick = () => {

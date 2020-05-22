@@ -41,7 +41,7 @@ const Login = ({ history }) => {
     }
 
     useEffect(() => {
-        document.title = "unChat | Send Anonymous Messages"
+        document.title = "User Login | unChat"
     }, []);
 
     useEffect(() => {

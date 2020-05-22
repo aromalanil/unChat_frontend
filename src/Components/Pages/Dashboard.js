@@ -64,6 +64,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    document.title = "Dashboard | unChat"
     //Getting accessToken
     const accessToken = localStorage.getItem("accessToken");
     getUserData(accessToken);

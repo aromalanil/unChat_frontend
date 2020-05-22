@@ -19,8 +19,6 @@ const SendMessage = ({history,match}) => {
 
   useEffect(() => {
 
-    document.title = "Send Anonymous | unChat"
-
     axios(`${baseUrl}/user/${username}`, { timeout: 5000 })
       .then((res) => {
         if (res.status === 200) {
