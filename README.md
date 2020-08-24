@@ -1,10 +1,14 @@
 <h1 align="center">unChat | Anonymous Messaging</h1>
 <div align="center">
   <img src="https://img.shields.io/github/repo-size/aromalanil/unchat_frontend?style=for-the-badge"/>
-  <a href="https://app.netlify.com/sites/unchat/deploys" target="_blank">
+<a href="https://github.com/aromalanil/unChat_frontend/stargazers">
+   <img alt="GitHub stars" src="https://img.shields.io/github/stars/aromalanil/unChat_frontend?style=for-the-badge">
+</a>
+<a href="https://github.com/aromalanil/unChat_frontend/issues">
+   <img alt="GitHub issues" src="https://img.shields.io/github/issues/aromalanil/unChat_frontend?style=for-the-badge"></a><br/>
+ <a href="https://app.netlify.com/sites/unchat/deploys" target="_blank">
     <img src="https://api.netlify.com/api/v1/badges/c7eae3d7-7600-4cb7-9d76-574465b75de9/deploy-status"/>
   </a>
-  <img src="https://img.shields.io/github/issues/aromalanil/unChat_frontend?style=for-the-badge"/>
 
 <br/>
 
