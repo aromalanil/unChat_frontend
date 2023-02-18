@@ -84,7 +84,7 @@ const Login = ({ history }) => {
             axios({
                 method: 'post',
                 url: `${baseUrl}/user/login`,
-                timeout:5000,
+                timeout: 15000,
                 data: {
                     username: userName,
                     password: password

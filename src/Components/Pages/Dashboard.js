@@ -25,7 +25,7 @@ const Dashboard = () => {
     axios({
       url: `${baseUrl}/user/dashboard`,
       method: "GET",
-      timeout:5000,
+      timeout: 15000,
       headers: {
         authorization: `Bearer ${accessToken}`,
       },

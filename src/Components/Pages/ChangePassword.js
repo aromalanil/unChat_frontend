@@ -111,7 +111,7 @@ const ChangePassword = () => {
             axios({
                 method: 'post',
                 url: `${baseUrl}/user/password`,
-                timeout:5000,
+                timeout: 15000,
                 data: {
                     username: userName,
                     password: password,

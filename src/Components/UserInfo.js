@@ -20,7 +20,7 @@ const UserInfo = ({ name, username }) => {
         const accessToken = localStorage.getItem("accessToken");
         axios({
             url: `${baseUrl}/user/logout`,
-            timeout:5000,
+            timeout: 15000,
             method: "DELETE",
             headers: {
                 authorization: `Bearer ${accessToken}`

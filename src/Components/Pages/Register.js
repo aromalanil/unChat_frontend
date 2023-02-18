@@ -102,7 +102,7 @@ const Register = ({ history }) => {
             axios({
                 method: 'post',
                 url: `${baseUrl}/user/register `,
-                timeout:5000,
+                timeout: 15000,
                 data: {
                     name: name.trim(),
                     username: userName,
